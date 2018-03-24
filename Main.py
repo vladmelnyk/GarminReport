@@ -4,15 +4,13 @@ from fitparse import FitFile
 from numpy import nan
 
 
-
 def get_data_df(fitfile):
     df = pd.DataFrame(columns=('cadence', 'heart_rate', 'speed'))
 
     for record in fitfile.get_messages('record'):
-
         record = record.get_values()
         df = df.append(pd.DataFrame([[record.get('cadence'), record.get('heart_rate'), record.get('speed')]],
-                           columns=('cadence', 'heart_rate', 'speed')))
+                                    columns=('cadence', 'heart_rate', 'speed')))
 
     return df
 
@@ -27,7 +25,7 @@ if __name__ == '__main__':
     # convert rpm to spm
     df['cadence'] = df['cadence'] * 2
     # convert m/sec to min/km
-    df['speed'] = 1 /(df['speed'] /(100/6))
+    df['speed'] = 1 / (df['speed'] / (100 / 6))
 
     X = df[['cadence', 'speed']]
     y = df['heart_rate']
